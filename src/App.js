@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { AppBar, Box } from "@mui/material";
+import CreateTask from "./CreateTask";
+import ToDoList from "./ToDoList";
+import React, {useState} from 'react';
+import data from './data.json'
 
+
+// useState hook deconstructed into array. [Variable, method used to update]
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    const [ toDoList, setToDoList ] = useState(data);
 
-export default App;
+    console.log(setToDoList)
+
+
+    const addTask = (task) => {
+        let copy =  [...toDoList];
+        copy = [...copy, { id: toDoList.length + 1, task: task, complete: false }];
+        setToDoList(copy);
+    }
+   
+   
+   return (
+     <div className="App">
+       {/* Header */}
+       <Box textAlign='center' sx={{ height:60, flexGrow: 1 }}>
+        <AppBar 
+            style={{ height: 50,
+            backgroundColor: "#673ab7",
+          }} 
+            position="static"> Todo App
+                </AppBar>
+                </Box>
+                <CreateTask addTask={addTask} />
+                <ToDoList toDoList={toDoList}/>
+      
+     </div>
+   );
+  }
+   
+  export default App;
